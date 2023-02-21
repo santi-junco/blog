@@ -30,8 +30,6 @@ BASE2_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-SITE_NAME = 'SaJuBlog'
-
 # Application definition
 
 DJANGO_APPS = [
@@ -43,15 +41,17 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'apps.blog',
+    'apps.category',
+]
 
 THIRD_APPS = [
     'corsheaders',
     'rest_framework',
     'ckeditor',
-    'ckeditor_uploader',    
+    'ckeditor_uploader',
 ]
-
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_APPS 
 
 CKEDITOR_CONFIGS = {
@@ -95,6 +95,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blogBack.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000',]
+CORS_ALLOW_HEADERS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ['http://*']
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -144,9 +149,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES':{
-        'rest_framework.permission.AllowAny'
-    },
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.AllowAny'
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 15,
 }
@@ -156,7 +161,3 @@ AUTHENTICATION_BACKENDS = {
 }
 
 FILE_UPLOAD_PERMISSIONS = 0o640
-
-print('-'*100)
-print(BASE2_DIR)
-print('-'*100)
