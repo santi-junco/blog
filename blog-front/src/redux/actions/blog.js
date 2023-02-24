@@ -41,7 +41,7 @@ export const get_blog_list_page = (p) => async dispatch =>{
     };
 
     try{
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/blog/?page=${p}`, config);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/blog/?p=${p}`, config);
 
         if (res.status === 200){
             dispatch({

@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { get_blog_list, get_blog_list_page } from "../../redux/actions/blog";
 import BlogLoading from "../loaders/BlogLoader";
+import SmallSetPagination from "../paginacion/SmallSetPagination";
+import BlogCard from "./BlogCard";
 
 function BlogList({
 	blog_list,
 	get_blog_list,
-	get_blog_list_page
+	get_blog_list_page,
+	count
 }) {
 
 	useEffect(() => {
@@ -24,8 +27,16 @@ function BlogList({
 							</div>
 							<div className="relative max-w-7xl mx-auto">
 								<div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-									Lista de blog
+									{
+										blog_list.map(post =>(
+											<BlogCard />
+										))
+									}
 								</div>
+								<SmallSetPagination 
+									get_blog_list_page={get_blog_list_page} 
+									blog_list={blog_list} 
+									count={count}/>
 							</div>
 						</div>
 					</>
@@ -37,7 +48,8 @@ function BlogList({
 }
 
 const mapStateToProps = state => ({
-	blog_list: state.blog.blog_list
+	blog_list: state.blog.blog_list,
+	count : state.blog.count
 })
 
 export default connect(mapStateToProps, {
