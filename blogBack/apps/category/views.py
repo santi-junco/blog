@@ -20,19 +20,19 @@ class ListCategoriewView(APIView):
                     item['image'] = category.image.url
                     item['sub_categories'] = []
 
-                for cat in categories:
-                    sub_item = {}
-                    if cat.parent and cat.parent.id == category.id:
-                        sub_item['id'] = cat.id
-                        sub_item['name'] = cat.name
-                        sub_item['image'] = cat.image.url
+                    for cat in categories:
+                        sub_item = {}
+                        if cat.parent and cat.parent.id == category.id:
+                            sub_item['id'] = cat.id
+                            sub_item['name'] = cat.name
+                            sub_item['image'] = cat.image.url
 
-                        item['sub_categories'].append(sub_item)
-                
-                results.append(item)
-
-            return Response({'categories':'result'}, status=status.HTTP_200_OK)
+                            item['sub_categories'].append(sub_item)
+                    
+                    results.append(item)
+            
+            return Response({'categories':results}, status=status.HTTP_200_OK)
         
         else:
             return Response({'error':'No categories found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            
+    

@@ -7,7 +7,7 @@ const initialState = {
     categories: null,
 }
 
-export default function categorires(state = initialState, action){
+export default function categories(state = initialState, action){
     const {type, payload} = action
 
     switch(type){

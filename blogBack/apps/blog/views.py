@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
+from apps.category.models import Category
+
 class BlogListView(APIView):
 
     def get(self, request, format=None):
@@ -23,6 +25,24 @@ class BlogListView(APIView):
         
         else:
             return Response({'error': 'No posts found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class BlogListCategoryView(APIView):
+    def get(self, request, category_id, fromat=None):
+        
+        if Post.objects.exists():
+            category = Category.objects.get(id=category_id)
+            posts = Post.objects.filter(category=category)
+
+            paginator = SmallSetPagination()
+            results = paginator.paginate_queryset(posts, request)
+            serializer = PostSerializer(results, many=True)
+
+            return paginator.get_paginated_response({'posts': serializer.data})
+        
+        else:
+            return Response({'error': 'No posts found'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 class PostDetailView(APIView):
     def get(self, request, post_slug, format=None):
