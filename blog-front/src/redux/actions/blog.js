@@ -2,6 +2,8 @@ import axios from "axios";
 import { 
     GET_BLOG_LIST_FAIL, 
     GET_BLOG_LIST_SUCCESS,
+    GET_BLOG_FAIL, 
+    GET_BLOG_SUCCESS,
     GET_BLOG_LIST_CATEGORIES_FAIL,
     GET_BLOG_LIST_CATEGORIES_SUCCESS,
     GET_SEARCH_BLOG_SUCCESS,
@@ -132,12 +134,12 @@ export const get_blog = (slug) => async dispatch =>{
 
         if (res.status === 200){
             dispatch({
-                type: GET_BLOG_LIST_SUCCESS,
+                type: GET_BLOG_SUCCESS,
                 payload: res.data
             });
         }else{
             dispatch({
-                type: GET_BLOG_LIST_FAIL
+                type: GET_BLOG_FAIL
             })
         }
     }catch{
